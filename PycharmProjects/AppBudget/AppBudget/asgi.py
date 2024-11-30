@@ -6,14 +6,12 @@ from transactions.routing import websocket_urlpatterns
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'AppBudget.settings')
 
-application = get_asgi_application()
-ASGI_APPLICATION = 'budget_app.asgi.application'
-
+# Application ASGI pour gérer les WebSockets et les requêtes HTTP
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),  # Gestion des requêtes HTTP normales
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            websocket_urlpatterns
+            websocket_urlpatterns  # Routes pour les WebSockets
         )
     ),
 })

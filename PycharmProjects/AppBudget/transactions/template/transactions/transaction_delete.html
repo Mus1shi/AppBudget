@@ -1,0 +1,16 @@
+{% extends 'transactions/base.html' %}
+{% block title %}Supprimer une Transaction{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-red-500 mb-4">Supprimer une Transaction</h2>
+<p class="text-gray-700">Êtes-vous sûr de vouloir supprimer cette transaction ?</p>
+<form method="post" action="{% url 'transaction_delete' transaction.id %}" class="space-y-4">
+    {% csrf_token %}
+    <button type="submit" class="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+        Oui, supprimer
+    </button>
+</form>
+<a href="{% url 'transaction_list' %}" class="block mt-4 text-[#2E8B57] hover:underline">
+    Annuler
+</a>
+{% endblock %}

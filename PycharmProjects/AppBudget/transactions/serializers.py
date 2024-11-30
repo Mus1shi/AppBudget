@@ -4,14 +4,17 @@ from .models import Transaction, Category, Currency
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['id', 'name']
 
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
-        fields = '__all__'
+        fields = ['id', 'name', 'symbol']
 
 class TransactionSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
+    currency = CurrencySerializer()
+
     class Meta:
         model = Transaction
-        fields = '__all__'
+        fields = ['id', 'name', 'amount', 'date', 'category', 'currency', 'description']

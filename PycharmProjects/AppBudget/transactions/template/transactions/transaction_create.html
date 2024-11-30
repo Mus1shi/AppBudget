@@ -1,0 +1,16 @@
+{% extends 'transactions/base.html' %}
+{% block title %}Créer une Transaction{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-[#2E8B57] mb-4">Ajouter une Transaction</h2>
+<form method="post" action="{% url 'transaction_create' %}" class="space-y-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="w-full bg-[#2E8B57] text-white py-2 px-4 rounded hover:bg-[#225D40]">
+        Ajouter
+    </button>
+</form>
+<a href="{% url 'transaction_list' %}" class="block mt-4 text-[#2E8B57] hover:underline">
+    Retour à la liste
+</a>
+{% endblock %}

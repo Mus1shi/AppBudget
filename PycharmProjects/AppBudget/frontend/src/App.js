@@ -2,6 +2,7 @@ import React from 'react';
 import Dashboard from './components/Dashboard';
 import TransactionList from './components/TransactionList';
 import TransactionForm from './components/TransactionForm';
+import ExpenseChart from './components/ExpenseChart'; // Import du nouveau composant
 
 const App = () => {
     return (
@@ -11,6 +12,7 @@ const App = () => {
             </header>
             <main className="container mx-auto p-4 space-y-8">
                 <Dashboard />
+                <ExpenseChart /> {/* Ajout du graphique */}
                 <TransactionForm />
                 <TransactionList />
             </main>
