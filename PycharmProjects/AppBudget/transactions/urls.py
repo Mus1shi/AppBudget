@@ -1,35 +1,23 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import (
-    CategoryViewSet,
-    CurrencyViewSet,
-    TransactionViewSet,
-    transaction_list,
-    transaction_create,
-    transaction_update,
-    transaction_delete,
-    transaction_summary,
-    expense_summary,
-)
+from django.urls import path
+from . import views
 
-# Routeur pour les APIs avec DRF
-router = DefaultRouter()
-router.register(r'categories', CategoryViewSet, basename='category')
-router.register(r'currencies', CurrencyViewSet, basename='currency')
-router.register(r'transactions', TransactionViewSet, basename='transaction')
-
-# URL patterns spécifiques à l'application "transactions"
 urlpatterns = [
-    # Routes API via le routeur DRF
-    path('api/', include(router.urls)),
+    # Vues API
+    path('transaction_summary/', views.transaction_summary, name='transaction_summary'),
+    path('transaction_detail/<int:id>/', views.transaction_detail_api, name='transaction_detail'),
+    path('expense_summary/', views.expense_summary, name='expense_summary'),
 
-    # Routes fonctionnelles pour les templates HTML
-    path('', transaction_list, name='transaction_list'),
-    path('create/', transaction_create, name='transaction_create'),
-    path('<int:pk>/update/', transaction_update, name='transaction_update'),
-    path('<int:pk>/delete/', transaction_delete, name='transaction_delete'),
+    # Vues fonctionnelles (HTML)
+    path('list/', views.transaction_list, name='transaction_list'),
+    path('create/', views.transaction_create, name='transaction_create'),
+    path('update/<int:pk>/', views.transaction_update, name='transaction_update'),
+    path('delete/<int:pk>/', views.transaction_delete, name='transaction_delete'),
 
-    # Routes API spécifiques
-    path('api/summary/', transaction_summary, name='transaction_summary'),
-    path('api/expense_summary/', expense_summary, name='expense_summary'),
+    # Routes pour les ViewSets
+    path('categories/', views.CategoryViewSet.as_view({'get': 'list', 'post': 'create'}), name='categories'),
+    path('categories/<int:pk>/', views.CategoryViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='category_detail'),
+    path('currencies/', views.CurrencyViewSet.as_view({'get': 'list', 'post': 'create'}), name='currencies'),
+    path('currencies/<int:pk>/', views.CurrencyViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='currency_detail'),
+    path('transactions/', views.TransactionViewSet.as_view({'get': 'list', 'post': 'create'}), name='transactions'),
+    path('transactions/<int:pk>/', views.TransactionViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='transaction_detail_viewset'),
 ]

@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Sum
 from django.contrib import messages
@@ -82,3 +81,4 @@ def expense_summary(request):
         .order_by('-total')
     )
     return Response(data)
+
